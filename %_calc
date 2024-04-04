@@ -1,0 +1,51 @@
+def calculate_deposit(S, M, I, P):
+  """
+  Функция для расчета суммы вклада с ежемесячным пополнением.
+
+  Args:
+    S: Начальная сумма вклада.
+    M: Количество месяцев.
+    I: Процентная ставка.
+    P: Период пополнения (в месяцах).
+
+  Returns:
+    Сложную сумму вклада.
+  """
+
+  monthly_interest = I / 1200
+  total_amount = S
+
+  for i in range(1, M + 1):
+    # Ежемесячное пополнение
+    if i % P == 0:
+      total_amount += S
+    # Начисление процентов
+    total_amount *= (1 + monthly_interest)
+
+  return total_amount
+
+
+def main():
+  """
+  Главная функция.
+  """
+
+  try:
+    S = float(input("Введите начальную сумму вклада: "))
+    M = int(input("Введите количество месяцев: "))
+    I = float(input("Введите процентную ставку: "))
+    P = int(input("Введите период пополнения (в месяцах): "))
+  except ValueError:
+    print("Введено некорректное число.")
+    return
+
+  # Вычисление и вывод результата
+  for period in range(1, 13):
+    if period == P:
+      print(f"Период пополнения: {period} месяцев")
+    total_amount = calculate_deposit(S, M, I, period)
+    print(f"Сумма через {M} месяцев: {total_amount:.2f}")
+
+
+if __name__ == "__main__":
+  main()
