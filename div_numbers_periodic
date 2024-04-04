@@ -1,0 +1,58 @@
+def decimal_division(numerator, denominator):
+  """
+  Функция для деления чисел с выводом десятичной дроби.
+
+  Args:
+    numerator: Числитель.
+    denominator: Знаменатель.
+
+  Returns:
+    Строковое представление десятичной дроби.
+  """
+
+  if denominator == 0:
+    raise ValueError("Деление на ноль невозможно.")
+
+  # Деление с использованием десятичной арифметики
+  decimal_result = numerator / denominator
+
+  # Проверка на периодичность
+  periodic_part = ""
+  seen_remainders = set()
+  remainder = numerator % denominator
+  while remainder not in seen_remainders:
+    seen_remainders.add(remainder)
+    decimal_result *= 10
+    quotient = decimal_result // denominator
+    remainder = decimal_result % denominator
+    periodic_part += str(quotient)
+
+  # Формирование результата
+  if periodic_part:
+    return f"{decimal_result:.10f} ({periodic_part})"
+  else:
+    return f"{decimal_result:.10f}"
+
+
+def main():
+  """
+  Главная функция.
+  """
+
+  try:
+    numerator = float(input("Введите числитель: "))
+    denominator = float(input("Введите знаменатель: "))
+  except ValueError:
+    print("Введено некорректное число.")
+    return
+
+  # Вычисление и вывод результата
+  try:
+    result = decimal_division(numerator, denominator)
+    print(f"Результат деления: {result}")
+  except ValueError as e:
+    print(e)
+
+
+if __name__ == "__main__":
+  main()
